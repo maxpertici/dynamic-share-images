@@ -27,7 +27,7 @@ function og_image_url ( $url ) {
      */
 
     
-    return  'http://localhost/wp-org/uploads/wp-dsi/share-image/'.$post->post_name.'.png' ;
+    return  'http://localhost/wp-org/contrib/wp-content/uploads/wp-dsi/share-image/'.$post->post_name.'.png' ;
 
     
 }
