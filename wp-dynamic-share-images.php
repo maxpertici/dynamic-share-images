@@ -23,6 +23,15 @@ function og_image_url ( $url ) {
 
     /**
      * 
+     * TODO
+     * 
+     * single only
+     * url
+     * 
+     */
+
+    /**
+     * 
      * Yoast wpseo_opengraph_image
      */
 
@@ -47,6 +56,13 @@ function wp_dsi_generate_share_image( $post ){
 
   $mpdf = new \Mpdf\Mpdf();
 
+  /**
+   * TODO
+   * 
+   * vrai content
+   * PATHs
+   * layout
+   */
   $mpdf->WriteHTML('<h1>Hello world!</h1>');
 
   $mpdf->Output( 'wp-content/uploads/wp-dsi/cache/temp.pdf' );
