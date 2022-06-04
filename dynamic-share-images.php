@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name:  WP Dynamic Share Images
-Plugin URI:   https://maxpertici.fr#wp-dynamic-share-images
+Plugin Name:  Dynamic Share Images
+Plugin URI:   https://maxpertici.fr#dynamic-share-images
 Description:  /
 Version:      0.1
 Author:       @maxpertici
@@ -9,17 +9,16 @@ Author URI:   https://maxpertici.fr
 Contributors:
 License:      GPLv2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain:  wp-dynamic-share-images
+Text Domain:  dynamic-share-images
 Domain Path:  /languages
 */
 
 defined( 'ABSPATH' ) or	die();
 
-
 function og_image_url ( $url ) {
   
     global $post ;
-    wp_dsi_generate_share_image( $post );
+    dsimages_generate_share_image( $post );
 
     /**
      * 
@@ -48,9 +47,7 @@ add_filter('wpseo_opengraph_image', 'og_image_url');
  * 
  * 
  */
-function wp_dsi_generate_share_image( $post ){
-
-  
+function dsimages_generate_share_image( $post ){
 
   require_once __DIR__ . '/vendor/autoload.php';
 
