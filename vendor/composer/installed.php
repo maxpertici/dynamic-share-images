@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '9771cc7621d7437837321ca408311e0e1b852b04',
+    'reference' => '6e493d59ad887d7645d304de1979b015805b3f13',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,70 +18,43 @@
       'aliases' => 
       array (
       ),
-      'reference' => '9771cc7621d7437837321ca408311e0e1b852b04',
+      'reference' => '6e493d59ad887d7645d304de1979b015805b3f13',
     ),
-    'mpdf/mpdf' => 
+    'dompdf/dompdf' => 
     array (
-      'pretty_version' => 'v8.1.1',
-      'version' => '8.1.1.0',
+      'pretty_version' => 'v1.2.2',
+      'version' => '1.2.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'e511e89a66bdb066e3fbf352f00f4734d5064cbf',
+      'reference' => '5031045d9640b38cfc14aac9667470df09c9e090',
     ),
-    'myclabs/deep-copy' => 
+    'phenx/php-font-lib' => 
     array (
-      'pretty_version' => '1.11.0',
-      'version' => '1.11.0.0',
+      'pretty_version' => '0.5.4',
+      'version' => '0.5.4.0',
       'aliases' => 
       array (
       ),
-      'reference' => '14daed4296fae74d9e3201d2c4925d1acb7aa614',
+      'reference' => 'dd448ad1ce34c63d09baccd05415e361300c35b4',
     ),
-    'paragonie/random_compat' => 
+    'phenx/php-svg-lib' => 
     array (
-      'pretty_version' => 'v9.99.100',
-      'version' => '9.99.100.0',
+      'pretty_version' => '0.4.1',
+      'version' => '0.4.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '996434e5492cb4c3edcb9168db6fbb1359ef965a',
+      'reference' => '4498b5df7b08e8469f0f8279651ea5de9626ed02',
     ),
-    'php-http/message-factory' => 
+    'sabberworm/php-css-parser' => 
     array (
-      'pretty_version' => 'v1.0.2',
-      'version' => '1.0.2.0',
+      'pretty_version' => '8.4.0',
+      'version' => '8.4.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'a478cb11f66a6ac48d8954216cfed9aa06a501a1',
-    ),
-    'psr/http-message' => 
-    array (
-      'pretty_version' => '1.0.1',
-      'version' => '1.0.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'f6561bf28d520154e4b0ec72be95418abe6d9363',
-    ),
-    'psr/log' => 
-    array (
-      'pretty_version' => '2.0.0',
-      'version' => '2.0.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'ef29f6d262798707a9edd554e2b82517ef3a9376',
-    ),
-    'setasign/fpdi' => 
-    array (
-      'pretty_version' => 'v2.3.6',
-      'version' => '2.3.6.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '6231e315f73e4f62d72b73f3d6d78ff0eed93c31',
+      'reference' => 'e41d2140031d533348b2192a83f02d8dd8a71d30',
     ),
   ),
 );
