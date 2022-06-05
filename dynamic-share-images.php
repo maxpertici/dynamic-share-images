@@ -21,12 +21,34 @@ defined( 'ABSPATH' ) or	die();
  * 
  */
 
-function dsimages_prep_images( $template ){
+function dsimages_setup_share_image( $template ){
 
   // TODO : improve early retrun condition
   // pour permettre de déployer progressivemtn la geenration dimage par exemple.
+  // avec une fonction de callback filtrable
+  
+  $supported_post_types = apply_filters( 'dynamic_share_images/post_types' , [ 'post' ] ) ;
+  
+  if( ! in_array( get_post_type() , $supported_post_types ) ){ return $template ; }
 
-  if( ! is_singular('post') ){  return $template ; }
+  $need_share_image = false ;
+  foreach( $supported_post_types as $post_type ){
+    if( is_singular( $post_type ) ){ $need_share_image = true ; break ; }
+  }
+
+  if( false === $need_share_image ){ return $template; }
+
+  /**
+   * A ce stage, on un single avec un cpt inclus dans les postypes supportes
+   * 
+   */
+  
+
+  /**
+   * On vérifie si on l image déjà existante,
+   * si non, on l a crée.
+   * 
+   */
 
   global $post ;
 
@@ -38,14 +60,16 @@ function dsimages_prep_images( $template ){
 
 }
 
-add_action( 'template_include', 'dsimages_prep_images' );
+add_action( 'template_include', 'dsimages_setup_share_image' );
 
 
 
 
 /**
+ * TODO ::
+ * 
  * ! le hook est joué que si il y a une images
- * ! il y a aussi des og pour les dimensiosn de l image
+ * ! il y a aussi des <> og: pour les dimensions de l image
  * 
  * ? custom hook
  * 
@@ -136,7 +160,8 @@ function dsimages_has_uploads_folder(){
 function dsimages_has_share_image( $post ){
 
   $filename = dsimages_get_media_folder_path() . '/cache/' . $post->ID . '-' .$post->post_name.'.png' ;
-  $file = file_get_contents ( $filename ) ;
+  // $file = file_get_contents ( $filename ) ;
+  $file = @fopen ( $filename, "r" ) ;
   if( false != $file ){ return true ; }
 
   return false ;
