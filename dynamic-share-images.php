@@ -130,24 +130,24 @@ function dsimages_get_media_folder_url(){
 /**
  * 
  * 
+ * @source : https://developer.wordpress.org/reference/functions/wp_upload_dir/
+ * 
  */
 function dsimages_has_uploads_folder(){
 
-  // https://developer.wordpress.org/reference/functions/wp_upload_dir/
 
-  $upload = wp_upload_dir();
-  $upload_dir = $upload['basedir'];
-  $upload_dir_dsi = $upload_dir . '/dynamic-share-images';
-  if (! is_dir($upload_dir_dsi)) { mkdir( $upload_dir_dsi, 0700 ); }
-
+  $upload           = wp_upload_dir();
+  $upload_dir       = $upload['basedir'];
+  $upload_dir_dsi   = $upload_dir . '/dynamic-share-images';
   $upload_dir_temp  = $upload_dir_dsi . '/temp';
-  if (! is_dir($upload_dir_temp)) { mkdir( $upload_dir_temp, 0700 ); }
-
   $upload_dir_cache = $upload_dir_dsi . '/cache';
-  if (! is_dir($upload_dir_cache)) { mkdir( $upload_dir_cache, 0700 ); }
+
+  if( ! is_dir( $upload_dir_dsi   )){ mkdir( $upload_dir_dsi,   0700 ); }
+  if( ! is_dir( $upload_dir_temp  )){ mkdir( $upload_dir_temp,  0700 ); }
+  if( ! is_dir( $upload_dir_cache )){ mkdir( $upload_dir_cache, 0700 ); }
 
   return true ;
-  
+
 }
 
 
@@ -160,12 +160,10 @@ function dsimages_has_uploads_folder(){
 function dsimages_has_share_image( $post ){
 
   $filename = dsimages_get_media_folder_path() . '/cache/' . $post->ID . '-' .$post->post_name.'.png' ;
-  // $file = file_get_contents ( $filename ) ;
   $file = @fopen ( $filename, "r" ) ;
   if( false != $file ){ return true ; }
 
   return false ;
-
 }
 
 
@@ -196,13 +194,15 @@ function dsimages_generate_share_image( $post ){
   $dompdf->loadHtml('<h1>hello world</h1>');
   $dompdf->render();
 
+  $id = wp_unique_id() ;
+
   $output = $dompdf->output();
-  file_put_contents( dsimages_get_media_folder_path() . '/temp/temp.pdf', $output);
+  file_put_contents( dsimages_get_media_folder_path() . '/temp/temp-'.$id.'.pdf', $output );
 
   $imagick = new Imagick();
-  $imagick->readImage( dsimages_get_media_folder_path() . '/temp/temp.pdf' );
+  $imagick->readImage( dsimages_get_media_folder_path() . '/temp/temp-'.$id.'.pdf' );
   $imagick->writeImages( dsimages_get_media_folder_path() . '/cache/' . $post->ID . '-' .$post->post_name.'.png', false );
 
-  unlink( dsimages_get_media_folder_path() . '/temp/temp.pdf' );
+  unlink( dsimages_get_media_folder_path() . '/temp/temp-'.$id.'.pdf' );
 
 }
