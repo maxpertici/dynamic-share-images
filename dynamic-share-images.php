@@ -16,12 +16,11 @@ Domain Path:  /languages
 defined( 'ABSPATH' ) or	die();
 
 /**
- * 
- * 
+ * Init
  * 
  */
 
-function dsimages_setup_share_image( $template ){
+function dsimages_init( $template ){
 
   // TODO : improve early retrun condition
   // pour permettre de déployer progressivemtn la geenration dimage par exemple.
@@ -60,7 +59,7 @@ function dsimages_setup_share_image( $template ){
 
 }
 
-add_action( 'template_include', 'dsimages_setup_share_image' );
+add_action( 'template_include', 'dsimages_init' );
 
 
 
@@ -91,9 +90,11 @@ add_filter( 'wpseo_opengraph_image', 'dsimages_og_image_url' );
 
 
 /**
- * 
+ * Helpers pour le dossier d upload
+ * return URL || false if folder dont exist
  * 
  */
+
 function dsimages_get_media_folder_url(){
 
   if( dsimages_has_uploads_folder() ){
@@ -109,8 +110,8 @@ function dsimages_get_media_folder_url(){
 
 
 /**
- * 
- * 
+ * Helpers pour le dossier d upload
+ * return PATH base || false if folder dont exist
  */
 
  function dsimages_get_media_folder_path(){
@@ -128,7 +129,8 @@ function dsimages_get_media_folder_url(){
 
 
 /**
- * 
+ * test if upload folder exist
+ * If NOT --> create folder
  * 
  * @source : https://developer.wordpress.org/reference/functions/wp_upload_dir/
  * 
@@ -153,7 +155,7 @@ function dsimages_has_uploads_folder(){
 
 
 /**
- * 
+ * Test if the share-image exist for this $post
  * 
  */
 
@@ -168,8 +170,8 @@ function dsimages_has_share_image( $post ){
 
 
 /**
- * 
- * 
+ * Gen. share image for the $post in param
+ * @param $post WP_Post 
  */
 
 function dsimages_generate_share_image( $post ){
