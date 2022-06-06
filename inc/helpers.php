@@ -123,3 +123,5 @@ function dsimages_has_share_image( $post ){
 
   return false ;
 }
+
+
