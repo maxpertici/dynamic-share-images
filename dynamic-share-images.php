@@ -39,9 +39,6 @@ function dsimages_launch() {
 
   if( ! class_exists('Imagick') ){ return false ; }
 
-  require_once __DIR__ . '/vendor/autoload.php';
-  require_once __DIR__ . '/inc/helpers.php' ;
-  
   add_action( 'template_include', 'dsimages_init' );
   
 }
@@ -85,6 +82,8 @@ function dsimages_init( $template ){
   // — - - — - -
  
   // On vérifie si on l image déjà existante, si non, on l a crée.
+
+  require_once __DIR__ . '/inc/helpers.php' ;
 
   global $post ;
 
@@ -133,6 +132,8 @@ function dsimages_og_image_url ( $url ) {
 
     // TODO : Check if image exist !!
     
+    require_once __DIR__ . '/inc/helpers.php' ;
+
     global $post ;
     return  dsimages_get_media_folder_url() . $post->ID . '-' . $post->post_name . '.png' ;
 }
@@ -152,6 +153,9 @@ add_filter( 'wpseo_opengraph_image', 'dsimages_og_image_url' );
  */
 
 function dsimages_generate_share_image( $post ){
+  
+  require_once __DIR__ . '/vendor/autoload.php';
+  require_once __DIR__ . '/inc/helpers.php' ;
   
   /**
    * TODO
