@@ -16,15 +16,55 @@ Domain Path:  /languages
 defined( 'ABSPATH' ) or	die();
 
 /**
- * Init
+ * ! idées à dév.
+ * - - - - - - - -
+ * il faut que la genration ud pdf et la generation de  l image se fasse en 2 temps.
+ * Ca porrait être une options. gen et save 2 fichier sur un chargement, ca me 
+ * parait pas tres scalable, du moins si on divise par 2, c'ets plus simple.
+ * 
+ * Mettre un hook pour setup l option avant d avoir une page de settiongs par exemple
+ * 
+ */
+
+ /**
+  *  Test config serveur on launch the init si OK
+  */
+
+function dsimages_launch() {
+  
+  // TODO : support Gmagick
+  // if( ! class_exists('Gmagick') ){ return false ; } 
+
+  if( ! class_exists('Imagick') ){ return false ; }
+
+  require_once __DIR__ . '/vendor/autoload.php';
+  require_once __DIR__ . '/inc/helpers.php' ;
+  
+  add_action( 'template_include', 'dsimages_init' );
+  
+}
+
+add_action( 'plugins_loaded', 'dsimages_launch' );
+
+
+
+/**
+ * Init :
+ * - - - 
+ * depends from dsimages_launch() above
  * 
  */
 
 function dsimages_init( $template ){
 
-  // TODO : improve early retrun condition
-  // pour permettre de déployer progressivemtn la geenration dimage par exemple.
-  // avec une fonction de callback filtrable
+  /**
+   * TODO : improve early retrun condition
+   * - - - - - - - - - - - - - - - - - - - - 
+   * pour permettre de déployer progressivemtn la geenration dimage par exemple.
+   * avec une fonction de callback filtrable
+   * 
+   */
+
   
   $supported_post_types = apply_filters( 'dynamic_share_images/post_types' , [ 'post' ] ) ;
   
@@ -37,17 +77,10 @@ function dsimages_init( $template ){
 
   if( false === $need_share_image ){ return $template; }
 
-  /**
-   * A ce stage, on un single avec un cpt inclus dans les postypes supportes
-   * 
-   */
-  
+  // A ce stage, on un single avec un cpt inclus dans les postypes supportes
+  // — - - — - -
 
-  /**
-   * On vérifie si on l image déjà existante,
-   * si non, on l a crée.
-   * 
-   */
+  // On vérifie si on l image déjà existante, si non, on l a crée.
 
   global $post ;
 
@@ -59,7 +92,23 @@ function dsimages_init( $template ){
 
 }
 
-add_action( 'template_include', 'dsimages_init' );
+
+
+
+
+/**
+ * TODO :
+ * - - - -
+ * 
+ * output le markup og minimal
+ * @source : https://ogp.me/
+ * 
+ */
+function dsimages_og_base_markup(){
+
+}
+
+add_filter( 'wp_head', 'dsimages_og_base_markup' );
 
 
 
@@ -78,7 +127,8 @@ function dsimages_og_image_url ( $url ) {
   
     if( ! is_singular('post') ){  return $url ; }
 
-    // check if image exist
+    // TODO : Check if image exist !!
+    
     global $post ;
     return  dsimages_get_media_folder_url() . $post->ID . '-' . $post->post_name . '.png' ;
 }
@@ -90,97 +140,11 @@ add_filter( 'wpseo_opengraph_image', 'dsimages_og_image_url' );
 
 
 /**
- * Helpers pour le dossier d upload
- * return URL || false if folder dont exist
- * 
- */
-
-function dsimages_get_media_folder_url(){
-
-  if( dsimages_has_uploads_folder() ){
-
-    $wp_upload_dir = wp_get_upload_dir() ;
-    return  $wp_upload_dir['baseurl'] . '/dynamic-share-images/cache/' ;
-
-  }
-
-  return false ; 
-}
-
-
-
-/**
- * Helpers pour le dossier d upload
- * return PATH base || false if folder dont exist
- */
-
- function dsimages_get_media_folder_path(){
-
-    if( dsimages_has_uploads_folder() ){
-      $wp_upload_dir = wp_get_upload_dir() ;
-      return  $wp_upload_dir['basedir'] . '/dynamic-share-images/' ;
-    }
-
-    return false ; 
-
- }
-
-
-
-
-/**
- * test if upload folder exist
- * If NOT --> create folder
- * 
- * @source : https://developer.wordpress.org/reference/functions/wp_upload_dir/
- * 
- */
-function dsimages_has_uploads_folder(){
-
-
-  $upload           = wp_upload_dir();
-  $upload_dir       = $upload['basedir'];
-  $upload_dir_dsi   = $upload_dir . '/dynamic-share-images';
-  $upload_dir_temp  = $upload_dir_dsi . '/temp';
-  $upload_dir_cache = $upload_dir_dsi . '/cache';
-
-  if( ! is_dir( $upload_dir_dsi   )){ mkdir( $upload_dir_dsi,   0700 ); }
-  if( ! is_dir( $upload_dir_temp  )){ mkdir( $upload_dir_temp,  0700 ); }
-  if( ! is_dir( $upload_dir_cache )){ mkdir( $upload_dir_cache, 0700 ); }
-
-  return true ;
-
-}
-
-
-
-/**
- * Test if the share-image exist for this $post
- * 
- */
-
-function dsimages_has_share_image( $post ){
-
-  $filename = dsimages_get_media_folder_path() . '/cache/' . $post->ID . '-' .$post->post_name.'.png' ;
-  $file = @fopen ( $filename, "r" ) ;
-  if( false != $file ){ return true ; }
-
-  return false ;
-}
-
-
-/**
  * Gen. share image for the $post in param
  * @param $post WP_Post 
  */
 
 function dsimages_generate_share_image( $post ){
-
-  // TODO : support Gmagick
-  // if( ! class_exists('Gmagick') ){ return false ; } 
-
-  if( ! class_exists('Imagick') ){ return false ; }
-
   
   /**
    * TODO
@@ -188,7 +152,7 @@ function dsimages_generate_share_image( $post ){
    * 
    */
 
-  require_once __DIR__ . '/vendor/autoload.php';
+  
 
   // https://github.com/dompdf/dompdf
 
