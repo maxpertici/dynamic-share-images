@@ -77,9 +77,10 @@ function dsimages_init( $template ){
 
   if( false === $need_share_image ){ return $template; }
 
-  // A ce stage, on un single avec un cpt inclus dans les postypes supportes
   // — - - — - -
-
+  // A ce stage, on a un single avec un cpt inclus dans les postypes supportes
+  // — - - — - -
+ 
   // On vérifie si on l image déjà existante, si non, on l a crée.
 
   global $post ;
@@ -88,7 +89,7 @@ function dsimages_init( $template ){
     dsimages_generate_share_image( $post );
   }
   
-  return $template; 
+  return $template ;
 
 }
 
