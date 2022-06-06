@@ -142,6 +142,9 @@ add_filter( 'wpseo_opengraph_image', 'dsimages_og_image_url' );
 /**
  * Gen. share image for the $post in param
  * @param $post WP_Post 
+ * 
+ * this function use dompdf
+ * @source : https://github.com/dompdf/dompdf
  */
 
 function dsimages_generate_share_image( $post ){
@@ -152,12 +155,14 @@ function dsimages_generate_share_image( $post ){
    * 
    */
 
-  
-
-  // https://github.com/dompdf/dompdf
-
   $dompdf = new \Dompdf\Dompdf();
-  $dompdf->loadHtml('<h1>hello world</h1>');
+  
+  ob_start();
+  include( apply_filters( 'dynamic-share-images/template-path',  __DIR__ . '/inc/image-template.php' ) );
+  $template_html = ob_get_contents();
+  ob_end_clean();
+
+  $dompdf->loadHtml( $template_html );
   $dompdf->render();
 
   $id = wp_unique_id() ;
