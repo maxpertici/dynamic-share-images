@@ -35,6 +35,8 @@ function dsimages_launch() {
   // TODO : support Gmagick
   // if( ! class_exists('Gmagick') ){ return false ; } 
 
+  register_uninstall_hook( __FILE__, 'dsimages_uninstall' );
+
   if( ! class_exists('Imagick') ){ return false ; }
 
   require_once __DIR__ . '/vendor/autoload.php';
@@ -45,6 +47,7 @@ function dsimages_launch() {
 }
 
 add_action( 'plugins_loaded', 'dsimages_launch' );
+
 
 
 
@@ -177,4 +180,20 @@ function dsimages_generate_share_image( $post ){
 
   unlink( dsimages_get_media_folder_path() . '/temp/temp-'.$id.'.pdf' );
 
+}
+
+
+
+
+/**
+ * 
+ * 
+ */
+
+function dsimages_uninstall(){
+ 
+  echo 'unistall';
+  
+  die ;
+  
 }
