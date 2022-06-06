@@ -196,6 +196,9 @@ function dsimages_uninstall(){
   $dsi_uploads_dir = $wp_upload_dir['baseurl'] . '/dynamic-share-images/' ;
 
   // @source : https://kapeli.com/dash_share?docset_file=PHP&docset_name=PHP&path=www.php.net/manual/en/function.rmdir.html&platform=php&repo=Main&source=www.php.net/manual/en/function.rmdir.php
+
+  $dir = $wp_upload_dir ;
+
   if (is_dir($dir)) { 
     $objects = scandir($dir); 
     foreach ($objects as $object) { 
