@@ -191,9 +191,6 @@ function dsimages_generate_share_image( $post ){
  */
 
 function dsimages_uninstall(){
- 
-  echo 'unistall';
-  die ;
   
   $wp_upload_dir   = wp_get_upload_dir() ;
   $dsi_uploads_dir = $wp_upload_dir['baseurl'] . '/dynamic-share-images/' ;
